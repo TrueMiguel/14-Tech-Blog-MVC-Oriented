@@ -1,5 +1,6 @@
 const { Model, DataTypes, DATE} = require('sequelize');
 const sequelize = require('../config/connections');
+const moment = require('moment-timezone');
 
 class Post extends Model {}
 
@@ -16,7 +17,7 @@ Post.init (
             allowNull: true,
         },
         post_content: {
-            type: DataTypes.STRING,
+            type: DataTypes.TEXT,
             allowNull: true,
         },
         user_id: {
@@ -29,7 +30,7 @@ Post.init (
         createdAt: {
             type: DataTypes.DATE,
             allowNull: false,
-            defaultValue: DataTypes.NOW
+            // defaultValue: DataTypes.NOW
         }, 
         isComment: {
             type: DataTypes.BOOLEAN,
@@ -41,12 +42,13 @@ Post.init (
         sequelize,
         freezeTableName: true,
         underscored: true,
-        modelName: 'comment',
+        modelName: 'post',
     }
 );
 
 Post.addHook('beforeCreate', (post) => {
-    post.createdAt = new Date();
-});
+    const formattedDate = moment().tz('America/New_York').format('M/D/YYYY');
+    post.setDataValue('createdAt', formattedDate);
+  });
 
 module.exports = Post;
