@@ -67,25 +67,28 @@ router.get('/profile', async (req, res) => {
     res.render('login');
  });
 
- // route to get all posts
-router.get('/posts', async (req, res) => {
+ // route to get all blogs
+router.get('/blogs', async (req, res) => {
 
     try {
         const postData = await Post.findAll({
           include: { model: User, required: true },
-          attributes: ['user.username', 'post_content']
+          attributes: ['user.username', 'post_content', 'createdAt'],
+          where: { isComment: false}
         });
     
         const posts = postData.map((post) => ({
           username: post.user.username,
-          post_content: post.post_content
+          post_content: post.post_content,
+          createdAt: post.createdAt
         }));
     
         res.json(posts);
       } catch (err) {
         res.status(500).json({ error: 'An error occurred while fetching the posts.' });
       }
-
+      
+});
     // this will be for when handlebars are set up. testing with out in the mean time. 
     // const postData = await Post.findAll({
     //     include: {model: User, required: true},
@@ -98,7 +101,29 @@ router.get('/posts', async (req, res) => {
     // const posts = postData.map((post) => [post.user.dataValues.username, post.dataValues.post_content]);
 
     // res.render('all-posts', { posts: posts });
-      });
+
+// route to get all comments
+router.get('/comments', async (req, res) => {
+
+    try {
+        const postData = await Post.findAll({
+          include: { model: User, required: true },
+          attributes: ['user.username', 'post_content', 'createdAt'],
+          where: { isComment: true}
+        });
+    
+        const posts = postData.map((post) => ({
+          username: post.user.username,
+          post_content: post.post_content,
+          createdAt: post.createdAt
+        }));
+    
+        res.json(posts);
+      } catch (err) {
+        res.status(500).json({ error: 'An error occurred while fetching the posts.' });
+      }
+      
+});
 
 // route to get one post
 router.get('/posts/:id', async (req, res) => {

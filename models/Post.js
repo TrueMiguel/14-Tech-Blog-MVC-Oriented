@@ -28,9 +28,8 @@ Post.init (
             }
         }, 
         createdAt: {
-            type: DataTypes.DATE,
+            type: DataTypes.STRING,
             allowNull: false,
-            // defaultValue: DataTypes.NOW
         }, 
         isComment: {
             type: DataTypes.BOOLEAN,
@@ -46,7 +45,7 @@ Post.init (
     }
 );
 
-Post.addHook('beforeCreate', (post) => {
+Post.addHook('beforeValidate', (post) => {
     const formattedDate = moment().tz('America/New_York').format('M/D/YYYY');
     post.setDataValue('createdAt', formattedDate);
   });
