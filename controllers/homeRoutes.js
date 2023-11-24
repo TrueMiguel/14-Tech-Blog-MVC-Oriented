@@ -13,17 +13,28 @@ router.get('/', async (req, res) => {
 
         const users = userData.map((project) => project.get({ plain: true }));
 
-        //fetching post data
-        const postData = await Post.findAll({
-            include: {model: User, required: true},
-            attributes: ['user.username', 'post_content', 'createdAt']
-        });
+        //fetching 6 most recent post data
+        const blogData = await Post.findAll({
+            include: { model: User, required: true },
+            attributes: ['title', 'user.username', 'post_content', 'createdAt'],
+            where: { isComment: false },
+            // sort by createdAt in descending order
+            order: [['createdAt', 'DESC']], 
+            // limits the results to 6 posts
+            limit: 6, 
+          });
+      
+          const blogs = blogData.map((blog) => ({
+            title: blog.title,
+            username: blog.user.username,
+            post_content: blog.post_content,
+            createdAt: blog.createdAt,
+          }));
 
-        const posts = postData.map((post) => [post.user.dataValues.username, post.dataValues.post_content, post.dataValues.rating]);
-
+          console.log(blogs)
         res.render('homepage', {
             users,
-            posts: posts,
+            blog: blogs,
             logged_in: req.session.logged_in, 
         });
 
@@ -67,40 +78,55 @@ router.get('/profile', async (req, res) => {
     res.render('login');
  });
 
- // route to get all blogs
+ // route to get all blogs recently
 router.get('/blogs', async (req, res) => {
 
     try {
-        const postData = await Post.findAll({
+        const blogData = await Post.findAll({
           include: { model: User, required: true },
-          attributes: ['user.username', 'post_content', 'createdAt'],
-          where: { isComment: false}
+          attributes: ['title', 'user.username', 'post_content', 'createdAt'],
+          where: { isComment: false},
+          order: [['createdAt', 'DESC']],
+          limit: 6
         });
     
-        const posts = postData.map((post) => ({
-          username: post.user.username,
-          post_content: post.post_content,
-          createdAt: post.createdAt
+        const blogs = blogData.map((blog) => ({
+          title: blog.title,
+          username: blog.user.username,
+          post_content: blog.post_content,
+          createdAt: blog.createdAt
         }));
     
-        res.json(posts);
+        res.json(blogs);
       } catch (err) {
         res.status(500).json({ error: 'An error occurred while fetching the posts.' });
       }
       
 });
-    // this will be for when handlebars are set up. testing with out in the mean time. 
-    // const postData = await Post.findAll({
-    //     include: {model: User, required: true},
-    //     attributes: ['user.username', 'post_content']
-    //     // attributes: ['user.username', 'post_content', 'createdAt']
-    // }).catch((err) => { 
-    //     res.json(err);
-    //   });
-      
-    // const posts = postData.map((post) => [post.user.dataValues.username, post.dataValues.post_content]);
 
-    // res.render('all-posts', { posts: posts });
+ // route to get all blogs
+router.get('/blogs', async (req, res) => {
+
+    try {
+        const blogData = await Post.findAll({
+          include: { model: User, required: true },
+          attributes: ['title', 'user.username', 'post_content', 'createdAt'],
+          where: { isComment: false}
+        });
+    
+        const blogs = blogData.map((blog) => ({
+          title: blog.title,
+          username: blog.user.username,
+          post_content: blog.post_content,
+          createdAt: blog.createdAt
+        }));
+    
+        res.json(blogs);
+      } catch (err) {
+        res.status(500).json({ error: 'An error occurred while fetching the posts.' });
+      }
+      
+});
 
 // route to get all comments
 router.get('/comments', async (req, res) => {

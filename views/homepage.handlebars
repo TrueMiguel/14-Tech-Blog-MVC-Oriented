@@ -1,18 +1,20 @@
 <main>
-    <!-- Custom container for login form -->
-    <div id="custom-login-container"></div>
-
-    <!-- Custom container for create account form -->
-    <div id="custom-createAcount-container"></div>
-
-    <!-- Custom container for the post form -->
-    <div id="blogPostFormContainer"></div>
+    {{> recentBlogs}}
 </main>
+
+<!-- Custom container for login form -->
+<div id="custom-login-container"></div>
+
+<!-- Custom container for create account form -->
+<div id="custom-createAcount-container"></div>
+
+<!-- Custom container for the post form -->
+<div id="blogPostFormContainer"></div>
 
 <!-- Login form template -->
 <script type="text/x-handlebars-template" id="login-template">
     <h2>Login</h2>
-    <form class="form" id="login-form">
+    <form class="form login-form">
         <div class="form-group">
             <label for="username-login">Username:</label>
             <input class="form-input" type="text" id="username-login" />
@@ -41,4 +43,4 @@
 </script>
 
 
-<script src="/js/login.js"></script>
+<script src="../public/js/login.js"></script>
