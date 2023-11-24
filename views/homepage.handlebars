@@ -1,0 +1,44 @@
+<main>
+    <!-- Custom container for login form -->
+    <div id="custom-login-container"></div>
+
+    <!-- Custom container for create account form -->
+    <div id="custom-createAcount-container"></div>
+
+    <!-- Custom container for the post form -->
+    <div id="blogPostFormContainer"></div>
+</main>
+
+<!-- Login form template -->
+<script type="text/x-handlebars-template" id="login-template">
+    <h2>Login</h2>
+    <form class="form" id="login-form">
+        <div class="form-group">
+            <label for="username-login">Username:</label>
+            <input class="form-input" type="text" id="username-login" />
+        </div>
+        <div class="form-group">
+            <label for="password-login">Password:</label>
+            <input class="form-input" type="password" id="password-login" />
+        </div>
+        <div class="form-group">
+            <button class="btn btn-primary" type="submit">Login</button>
+        </div>
+    </form>
+</script>
+
+<!-- blog post form template -->
+<script id="blogPostFormTemplate" type="text/x-handlebars-template">
+    <form id="blogPostForm" class="blog-post-form">
+        
+        <input type="text" id="username-field" placeholder="Username">
+
+        <label for="blogText">Blog Text:</label>
+        <textarea id="blogText" name="blogText" rows="5" required></textarea>
+
+        <button type="submit">Submit Review</button>
+    </form>
+</script>
+
+
+<script src="/js/login.js"></script>
