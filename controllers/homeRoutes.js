@@ -77,6 +77,12 @@ router.get('/profile', async (req, res) => {
     res.render('login');
  });
 
+ // create account route
+router.get('/create_account', (req, res) => {
+
+    res.render('create-account');
+ });
+
  // route to dashboard
 router.get('/dashboard', async (req, res) => {
 
