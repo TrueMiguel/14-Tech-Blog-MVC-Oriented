@@ -31,7 +31,6 @@ router.get('/', async (req, res) => {
             createdAt: blog.createdAt,
           }));
 
-          console.log(blogs)
         res.render('homepage', {
             users,
             blog: blogs,
@@ -78,26 +77,27 @@ router.get('/profile', async (req, res) => {
     res.render('login');
  });
 
- // route to get all blogs recently
-router.get('/blogs', async (req, res) => {
+ // route to dashboard
+router.get('/dashboard', async (req, res) => {
 
     try {
+
+        // some test code for when I am working with userID
+        // const userId = req.session.user_id
         const blogData = await Post.findAll({
           include: { model: User, required: true },
-          attributes: ['title', 'user.username', 'post_content', 'createdAt'],
-          where: { isComment: false},
+          attributes: ['title', 'user.id', 'createdAt'],
+          where: { isComment: false, id:1 }, // replace 1 with userId const
           order: [['createdAt', 'DESC']],
-          limit: 6
         });
     
         const blogs = blogData.map((blog) => ({
-          title: blog.title,
-          username: blog.user.username,
-          post_content: blog.post_content,
-          createdAt: blog.createdAt
+            id: blog.user.id,
+            title: blog.title,
+            createdAt: blog.createdAt
         }));
     
-        res.json(blogs);
+        res.render('user-blogs', {blogs: blogs});
       } catch (err) {
         res.status(500).json({ error: 'An error occurred while fetching the posts.' });
       }

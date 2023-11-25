@@ -11,6 +11,9 @@
     <!-- UIkit JS -->
     <script src="https://cdn.jsdelivr.net/npm/uikit@3.17.11/dist/js/uikit.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/uikit@3.17.11/dist/js/uikit-icons.min.js"></script>
+    {{!-- <script src="/css/jass.css"></script> --}}
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+
 
 </head>
 
@@ -21,10 +24,8 @@
 
     <p uk-margin>
         {{!-- buttons for accessing login, dashboard, logout and create account. --}}
-        <a class="uk-button uk-button-default" id="home-btn">Home</a>
-        <button class="uk-button uk-button-default" id="logIn-btn">Dashboard</button>
-        {{!-- don't need this here, need to have it inside of the dashboard button --}}
-        <button class="uk-button uk-button-default" id="writeBlogButton">Dashboard</button>
+        <button class="uk-button uk-button-default" id="home-btn">Home</button>
+        <button class="uk-button uk-button-default btn" id="dashboard">Dashboard</button>
         <button class="uk-button uk-button-default btn btn-login" id="logIn-btn">Log In</button>
         <button class="uk-button uk-button-default" id="new-account-btn">Create Account</button>
     </p>
@@ -33,5 +34,7 @@
 <main>
     {{{ body }}}
 </main>
+
+<script src="/js/main.js"></script>
 
 </html>

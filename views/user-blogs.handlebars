@@ -1,14 +1,14 @@
-{{!-- blog post section --}}
 <section class="blog-section">
     <div class="blogs">
-        {{#each blog as |userBlog|}}
+        {{#each blogs as |userBlog|}}
 
             <div class="blog">
                 <h2>{{this.title}}</h2>
-                <h3>{{this.username}}</h3>
                 <p>{{this.createdAt}}</p>
-                <p>{{this.post_content}}</p>
             </div>
         {{/each}}
     </div>
 </section>
+
+{{!-- don't need this here, need to have it inside of the dashboard button --}}
+<button class="uk-button uk-button-default " id="writeBlogButton">Submit Post</button>
